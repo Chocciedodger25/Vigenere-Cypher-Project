@@ -26,18 +26,19 @@ public class Main
  on to solve what happens when the alphabet goes out of range when adding the key letter to it.
  Currently, it works by doubling itself, so it can't go out of range.
 ***********************************************************************************************************************/
-    public static ArrayList<Character> alphabetBuilder(char start, char end)
+    public static ArrayList<Integer> alphabetBuilder(char start, char end)
     {
         // variable to hold character from given arguments
         char character;
 
         // array of the alphabet we will use
-        ArrayList<Character> alphabet = new ArrayList<>();
+        ArrayList<Integer> alphabet = new ArrayList<>();
 
         // to fill the alphabet
         for(character = start; character<= end; ++character)
         {
-            alphabet.add(character);
+
+            alphabet.add((int) character);
         }
 
         // add alphabet to itself to accommodate for the addition
@@ -46,52 +47,111 @@ public class Main
         return alphabet;
     }
 
+
 /***********************************************************************************************************************
- Function name: letterCheck
- Inputs: text (String), alphabet (ArrayList<Character>)
- Returns: checker (boolean)
+ Function name: getNumbers
+ Inputs: test (String)
+ Returns: chars (ArrayList<Integer>)
  Author: Chocciedodger25
- Created on: 22/06/24
- Last modified on: 22/06/24 22:23
- Description: A function to check to see if the provided string contains any characters that are not within the given
- alphabet. It takes two arguments text (string) and alphabet (ArrayList<Character>). Text being the string you want to
- check and alphabet being the alphabet you want to check with.
+ Created on: 23/06/24
+ Last modified on: 23/06/24 18:28
+ Description: Used on the keyword from the looks of it. I can't remember what I was doing when writing this.
  **********************************************************************************************************************/
-
-    public static boolean letterCheck (String text,ArrayList<Character> alphabet )
+    public static ArrayList<Integer> getNumbers(String test)
     {
-        // set checker to true to assume it is all contained
-        boolean checker = true;
-
-        // breaking text into an array
-        char[] words = text.toCharArray();
-
-        // check each element in words if contained within alphabet
-        for (int i = 0; i < words.length; i++)
+        ArrayList<Integer> chars = new ArrayList<>();
+        for (int i = 0; i < test.length(); i++)
         {
-            // if not contained change status of checker
-            if (!alphabet.contains(words[i]))
+            char test1 = test.charAt(i);
+            chars.add((int) test1);
+        }
+        return chars;
+    }
+
+
+/***********************************************************************************************************************
+ Function name: encrypt
+ Inputs: input (String), keyword (String), alphabet (ArrayList<Integer>)
+ Returns: encryptString (StringBuilder)
+ Author: Chocciedodger25
+ Created on: 23/06/24
+ Last modified on: 23/06/24 22:24
+ Description: A function to use the logic behind the vigenere cypher, taking 3 arguments input, keyword and alphabet.
+ all oif these must be numbers of character contained within the alphabet for this we have stuck with the normal 65-90
+ within the alphabet forming a list of ascii characters going from A-Z. Anything outside of this range is treated as a
+ " ".
+
+ Notes: need to work on rejecting inputs and keywords that are not within the alphabet as exceptions.
+ **********************************************************************************************************************/
+    public static StringBuilder encrypt (String input, String keyword, ArrayList<Integer> alphabet)
+    {
+        // is the new string that we will return
+        StringBuilder encryptedString = new StringBuilder();
+
+        // an array for the keyword stored as numbers which relates to the ascii table
+        ArrayList<Integer> keywordList = getNumbers(keyword.toUpperCase());
+
+        // an array for the input string stored as numbers which relates to the ascii table
+        ArrayList<Integer> inputlist = getNumbers(input.toUpperCase());
+
+        // variable to track ourselves through the keyword
+        int keywordTracker = 0;
+
+        // loop to run through the arraylist for the input
+        for(int i = 0; i < inputlist.size(); i++)
+        {
+            // check to see if keyword tracker is bigger then the list if so reset
+            if (keywordTracker+1 > keywordList.size())
             {
-                checker = false;
-                break;
+                keywordTracker = 0;
+            }
+
+            // check to see if inputlist.get(i) is within the alphabet
+            if (alphabet.contains(inputlist.get(i)))
+            {
+                // variable to get letter from input and find in alphabet
+                int letter = alphabet.indexOf(inputlist.get(i));
+
+                // variable to get letter from keyword and find in alphabet
+                int letter2 = alphabet.indexOf(keywordList.get(keywordTracker));
+
+                // variable to hold ascii number of the key plus input
+                int encryptedLetterNumber = alphabet.get(letter + letter2);
+
+                // converting encryptedLetterNumber back to letter
+                char encryptedLetter = (char) encryptedLetterNumber;
+
+                // appending to string builder
+                encryptedString.append(encryptedLetter);
+
+                // increasing the position on keyword
+                keywordTracker++;
+
+            }else
+            {
+                // appending space for special characters or numbers currently
+                encryptedString.append(" ");
             }
         }
 
-        return checker;
+        return encryptedString;
     }
 
     // -----------------------------------------------------------------------------------------------------------------
     public static void main(String[] args)
     {
         // test string
-        String test = "why does my mum keep bothering me";
 
-        ArrayList<Character> alphabet = Main.alphabetBuilder(' ', '~');
-        ArrayList<Character> alphabet2 = Main.alphabetBuilder('0', '0');
+        String test2 = "lewis beard";
+        String keyword = "key";
+
+        ArrayList<Integer> alphabet = Main.alphabetBuilder('A', 'Z');
+
         System.out.println(alphabet);
 
-        System.out.println(Main.letterCheck(test, alphabet));
-        System.out.println(Main.letterCheck(test, alphabet2));
+        StringBuilder test3 = (encrypt(test2,keyword,alphabet));
+        System.out.println(test3);
+
 
 
     }
