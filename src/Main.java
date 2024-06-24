@@ -80,7 +80,6 @@ public class Main
  all oif these must be numbers of character contained within the alphabet for this we have stuck with the normal 65-90
  within the alphabet forming a list of ascii characters going from A-Z. Anything outside of this range is treated as a
  " ".
-
  Notes: need to work on rejecting inputs and keywords that are not within the alphabet as exceptions.
  **********************************************************************************************************************/
     public static StringBuilder encrypt (String input, String keyword, ArrayList<Integer> alphabet)
@@ -140,7 +139,6 @@ public class Main
     // -----------------------------------------------------------------------------------------------------------------
     public static void main(String[] args)
     {
-        // test string
 
         String test2 = "lewis beard";
         String keyword = "key";
