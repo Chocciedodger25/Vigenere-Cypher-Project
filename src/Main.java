@@ -45,12 +45,20 @@ public class Main
 
         JTextArea area=new JTextArea("Add message to encrypt here.");
         area.setBounds(10,30, 250,250);
+        area.setLineWrap(true);
+        area.setWrapStyleWord(true);
 
         JButton encryptButton=new JButton("Encrypt");
         encryptButton.setBounds(270,30,95,30);
+        encryptButton.setEnabled(true);
 
         JButton decryptButton=new JButton("Decrypt");
         decryptButton.setBounds(270,70,95,30);
+        decryptButton.setEnabled(false);
+
+        JButton compareButton=new JButton("Compare");
+        compareButton.setBounds(270,110,95,30);
+        compareButton.setEnabled(false);
 
         JTextField keyfield = new JTextField("Please enter Key Here.");
         keyfield.setBounds(10,300, 200,30);
@@ -61,6 +69,7 @@ public class Main
         f.add(area);
         f.add(encryptButton);
         f.add(decryptButton);
+        f.add(compareButton);
         f.add(keyfield);
         f.setLayout(null);
         f.setVisible(true);
