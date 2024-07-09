@@ -11,6 +11,8 @@
  **********************************************************************************************************************/
 
 import java.util.ArrayList;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class Main
 {
@@ -38,13 +40,42 @@ public class Main
     public static void main(String[] args)
     {
 
+
+        JFrame f=new JFrame("Vigenere Cypher 1.0");
+
+        JTextArea area=new JTextArea("Add message to encrypt here.");
+        area.setBounds(10,30, 250,250);
+
+        JButton encryptButton=new JButton("Encrypt");
+        encryptButton.setBounds(270,30,95,30);
+
+        JButton decryptButton=new JButton("Decrypt");
+        decryptButton.setBounds(270,70,95,30);
+
+        JTextField keyfield = new JTextField("Please enter Key Here.");
+        keyfield.setBounds(10,300, 200,30);
+
+
+
+        f.setSize(400,400);
+        f.add(area);
+        f.add(encryptButton);
+        f.add(decryptButton);
+        f.add(keyfield);
+        f.setLayout(null);
+        f.setVisible(true);
+        f.setResizable(false);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+
+
         // input variables to pass to the encryption method
-        Message test = new Message("Hello There");
+        Message test = new Message(area.getText());
         Key keyword = new Key("Test");
         Alphabet alphabet = new Alphabet('A','Z');
 
-        System.out.println(test.encryption(keyword,alphabet));
-
-
+        // the below is used to actually do the encryption
+        //System.out.println(test.encryption(keyword,alphabet));
     }
 }
