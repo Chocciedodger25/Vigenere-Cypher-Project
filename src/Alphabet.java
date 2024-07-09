@@ -10,7 +10,6 @@
  alternatives ones can't be used currently as it throws the counting of the cypher off.
  **********************************************************************************************************************/
 
-
 import java.util.ArrayList;
 
 public class Alphabet
