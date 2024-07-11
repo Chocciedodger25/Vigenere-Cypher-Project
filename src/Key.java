@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /***********************************************************************************************************************
  File name: Key.java
  File Type: Java Sourcecode file
@@ -18,7 +16,7 @@ public class Key {
     // constructor for key
     public Key (String key)
     {
-        this.key = key;
+        this.key = key.replaceAll("\\s","");
     }
 
     // getter for key

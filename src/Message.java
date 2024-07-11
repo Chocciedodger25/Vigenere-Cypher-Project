@@ -20,6 +20,7 @@ public class Message
     public Message (String plainText)
     {
         this.plainText=plainText;
+
     }
 
     // getter for the message as a string
@@ -95,6 +96,75 @@ public class Message
         return String.valueOf(encryptionString);
     }
 
+
+
+/***********************************************************************************************************************
+ Function name: decryption
+ Inputs: encryptionText (String), keyword (key), alphabet (Alphabet)
+ Returns: decryptionString (String)
+ Author: Chocciedodger25
+ Created on: 11/07/24 12:32
+ Last modified on: 11/07/24 12:32
+ Description: This is a function to reverse the encryption method, it simply moves the pointer to the second occurrence
+ and then minus the letter from the key rather then adding and this results in the method of decrypting the message so
+ long as the key's are the same.
+
+ **********************************************************************************************************************/
+
+    public String decryption (Key keyword, Alphabet alphabet)
+    {
+
+        StringBuilder decryptionString = new StringBuilder();
+
+        // an array for the keyword stored as numbers which relates to the ascii table
+        ArrayList<Integer> keywordList = Main.getNumbers(keyword.getKey().toUpperCase());
+
+        // an array for the input string stored as numbers which relates to the ascii table
+        ArrayList<Integer> inputlist = Main.getNumbers(getPlainText().toUpperCase());
+
+        // variable to track ourselves through the keyword
+        int keywordTracker = 0;
+
+        // loop to run through the arraylist for the input
+        for(int i = 0; i < inputlist.size(); i++)
+        {
+            // check to see if keyword tracker is bigger then the list if so reset
+            if (keywordTracker+1 > keywordList.size())
+            {
+                keywordTracker = 0;
+            }
+
+            // check to see if inputlist.get(i) is within the alphabet
+            if (alphabet.getAlphabet().contains(inputlist.get(i)))
+            {
+                // variable to get letter from input and find in alphabet
+                int letter = alphabet.getAlphabet().indexOf(inputlist.get(i)) + 26;
+
+                // variable to get letter from keyword and find in alphabet
+                int letter2 = alphabet.getAlphabet().indexOf(keywordList.get(keywordTracker));
+
+                // variable to hold ascii number of the key plus input
+                int decryptedLetterNumber = alphabet.getAlphabet().get((letter) - letter2);
+
+                // converting encryptedLetterNumber back to letter
+                char decryptedLetter = (char) decryptedLetterNumber;
+
+                // appending to string builder
+                decryptionString.append(decryptedLetter);
+
+                // increasing the position on keyword
+                keywordTracker++;
+
+            }else
+            {
+                // appending space for special characters or numbers currently
+                decryptionString.append(" ");
+            }
+        }
+
+        return String.valueOf(decryptionString);
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) {
@@ -102,6 +172,8 @@ public class Message
         Key Keyword = new Key("test");
         Alphabet alphabet = new Alphabet('A','Z');
 
-        System.out.println(test.encryption(Keyword,alphabet));
+        String test1 = test.encryption(Keyword,alphabet);
+        System.out.println(test1);
+        System.out.println(test.decryption(Keyword,alphabet));
     }
 }

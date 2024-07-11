@@ -49,6 +49,8 @@ public class Alphabet
     {
         Alphabet alphabet = new Alphabet('A', 'Z');
         System.out.println(alphabet);
+        System.out.println(alphabet.getAlphabet().indexOf(65));
+        System.out.println(alphabet.getAlphabet().indexOf(65) + 26);
 
     }
 }
